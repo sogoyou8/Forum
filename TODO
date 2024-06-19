@@ -1,0 +1,30 @@
+OBJECTIF
+Créer un forum web sur un thème
+Créer des catégories, des publications et des commentaires
+J’aime et je n’aime pas les publications
+Filtrage des publications
+Utiliser Sqlite pour la base de données
+Authentification de l’utilisateur
+Modération
+
+PAGES
+Pages principales :
+
+Une landing page
+Une page de connexion et d’inscription
+Une page pour voir toutes les catégories
+Une page pour afficher tous les articles d’une catégorie
+Une page pour afficher une publication et les commentaires qui y sont associés
+
+
+Pages de création :
+
+Une page pour créer une catégorie
+Une page pour créer un post
+
+
+Pages utilisateurs :
+
+Une page pour consulter votre profil d’utilisateur et modifier vos informations
+Une page pour afficher l’activité de votre compte (publications, commentaires, mentions J’aime et Je n’aime pas)
+Une page pour afficher le profil d’autres utilisateurs
