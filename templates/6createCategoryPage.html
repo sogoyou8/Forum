@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Création de category</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+
+<body>
+    <div class="hero">
+    <header>
+        <a href="/templates/1landingPage.html" class="logo-link">
+          <div class="logo">8Forum</div>
+        </a>
+        <nav>
+            <ul>
+                <li><a href="/about">A Propos</a></li>
+                <li><a href="/login">Login</a></li>
+             </ul>
+            
+            <img src="/pics/fuckThe7Teen.jpg" alt="userPic" class="user-icon" onclick="toggleMenu()">
+
+
+            <div class="sub-menu-wrap" id="subMenu">
+                <div class="sub-menu">
+                    <div class="user-info">
+                        <img src="/pics/fuckThe7Teen.jpg" alt="userPic">
+                        <h3>Toro</h3>
+                    </div>
+
+                    <hr>
+                    <a href="#" class="sub-menu-link">
+                        <img src="/pics/images/setting.png" alt="">
+                        <p>Setting&Privacy</p>
+                        <span>></span>
+                    </a>
+
+                    <a href="#" class="sub-menu-link">
+                        <img src="/pics/images/profile.png" alt="">
+                        <p>Edit Profile</p>
+                        <span>></span>
+                    </a>
+
+                    <a href="#" class="sub-menu-link">
+                        <img src="/pics/images/help.png" alt="">
+                        <p>Help&Support</p>
+                        <span>></span>
+                    </a>
+
+                    <a href="#" class="sub-menu-link">
+                        <img src="/pics/images/logout.png">
+                        <p>Loggout</p>
+                        <span>></span>
+                    </a>
+
+                </div>
+
+            </div>
+        </nav>
+    </header>
+
+    <h1>Creation de Catégorie</h1>
+    <h1>a changer plus tard avec les données</h1>
+
+    <div class="container">
+        <form id="create-category-form" action="/create-category" method="post" onsubmit="return submitForm(event)">
+            <label for="category-name">Category Name:</label>
+            <input type="text" id="category-name" name="category-name" placeholder="Enter category name" required>
+            <span id="category-name-error" class="error-message"></span>
+            
+            <label for="category-description">Category Description:</label>
+            <input type="text" id="category-description" name="category-description" placeholder="Enter category description" required>
+            <span id="category-description-error" class="error-message"></span>
+            
+            <input type="submit" value="Create Category">
+        </form>
+        <div id="message-container"></div>
+    </div>
+
+    <script>
+
+        let subMenu = document.getElementById("subMenu");
+  
+        function toggleMenu(){
+            subMenu.classList.toggle("open-menu");
+        }
+
+        async function submitForm(event) {
+            event.preventDefault();
+
+            var categoryName = document.getElementById('category-name').value.trim();
+            var categoryDescription = document.getElementById('category-description').value.trim();
+
+            // Validation du nom de la catégorie
+            if (categoryName === '') {
+                document.getElementById('category-name-error').textContent = 'Please enter a category name.';
+                return;
+            } else {
+                document.getElementById('category-name-error').textContent = '';
+            }
+
+            // Validation de la description de la catégorie
+            if (categoryDescription === '') {
+                document.getElementById('category-description-error').textContent = 'Please enter a category description.';
+                return;
+            } else {
+                document.getElementById('category-description-error').textContent = '';
+            }
+
+            // Envoyer la requête asynchrone pour créer une catégorie
+            try {
+                var response = await fetch('/create-category', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        categoryName: categoryName,
+                        categoryDescription: categoryDescription
+                    })
+                });
+
+                if (response.ok) {
+                    // Afficher un message de succès
+                    document.getElementById('message-container').innerHTML = '<span class="success-message">Category created successfully!</span>';
+                    // Réinitialiser le formulaire après 2 secondes
+                    setTimeout(function() {
+                        document.getElementById('create-category-form').reset();
+                        document.getElementById('message-container').innerHTML = '';
+                    }, 2000);
+                } else {
+                    // Afficher un message d'erreur
+                    document.getElementById('message-container').innerHTML = '<span class="error-message">Failed to create category. Please try again later.</span>';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                // Afficher un message d'erreur
+                document.getElementById('message-container').innerHTML = '<span class="error-message">An unexpected error occurred. Please try again later.</span>';
+            }
+        }
+    </script>
+</body>
+</html>

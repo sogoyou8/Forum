@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ma page de profil</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+
+<body>
+    <div class="hero">
+    <header>
+        <a href="/templates/1landingPage.html" class="logo-link">
+          <div class="logo">8Forum</div>
+        </a>
+        <nav>
+            <ul>
+                <li><a href="/about">A Propos</a></li>
+                <li><a href="/login">Login</a></li>
+             </ul>
+            
+            <img src="/pics/fuckThe7Teen.jpg" alt="userPic" class="user-icon" onclick="toggleMenu()">
+
+
+            <div class="sub-menu-wrap" id="subMenu">
+                <div class="sub-menu">
+                    <div class="user-info">
+                        <img src="/pics/fuckThe7Teen.jpg" alt="userPic">
+                        <h3>{{ .Username }}</h3>
+                    </div>
+
+                    <hr>
+                    <a href="#" class="sub-menu-link">
+                        <img src="/pics/images/setting.png" alt="">
+                        <p>Setting&Privacy</p>
+                        <span>></span>
+                    </a>
+
+                    <a href="#" class="sub-menu-link">
+                        <img src="/pics/images/profile.png" alt="">
+                        <p>Edit Profile</p>
+                        <span>></span>
+                    </a>
+
+                    <a href="#" class="sub-menu-link">
+                        <img src="/pics/images/help.png" alt="">
+                        <p>Help&Support</p>
+                        <span>></span>
+                    </a>
+
+                    <a href="../disconnect" class="sub-menu-link">
+                        <img src="/pics/images/logout.png">
+                        <p>Loggout</p>
+                        <span>></span>
+                    </a>
+
+                </div>
+
+            </div>
+        </nav>
+    </header>
+
+    <h1>Profil</h1>
+    <h1>Bonjour {{ .Username }}</h1>
+
+    <div class="container">
+        <h2>Profile Information</h2>
+        <div id="profile-info">
+            <!-- Les informations du profil seront chargées dynamiquement ici -->
+        </div>
+        <form id="profile-form" onsubmit="return updateProfile()">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <input type="submit" value="Update Profile">
+        </form>
+        <div id="message-container"></div>
+    </div>
+
+    <script>
+        let subMenu = document.getElementById("subMenu");
+  
+        function toggleMenu(){
+            subMenu.classList.toggle("open-menu");
+        }
+
+         // Fonction pour charger les informations du profil depuis le backend
+         async function loadProfile() {
+            try {
+                var response = await fetch('/profile');
+                var profile = await response.json();
+
+                document.getElementById('username').value = profile.username;
+                document.getElementById('email').value = profile.email;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        // Appeler la fonction pour charger les informations du profil au chargement de la page
+        window.onload = function() {
+            loadProfile();
+        };
+
+        // Fonction pour mettre à jour le profil
+        async function updateProfile() {
+            var username = document.getElementById('username').value.trim();
+            var email = document.getElementById('email').value.trim();
+
+            // Validation des champs
+            if (username === '') {
+                alert('Please enter a username.');
+                return false;
+            }
+
+            if (email === '') {
+                alert('Please enter an email address.');
+                return false;
+            }
+
+            // Envoyer les données du formulaire au backend pour mise à jour du profil
+            try {
+                var response = await fetch('/update-profile', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        email: email
+                    })
+                });
+
+                if (response.ok) {
+                    // Afficher un message de succès
+                    document.getElementById('message-container').innerHTML = '<span class="success-message">Profile updated successfully!</span>';
+                } else {
+                    // Afficher un message d'erreur
+                    document.getElementById('message-container').innerHTML = '<span class="error-message">Failed to update profile. Please try again later.</span>';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                // Afficher un message d'erreur
+                document.getElementById('message-container').innerHTML = '<span class="error-message">An unexpected error occurred. Please try again later.</span>';
+            }
+
+            return false;
+        }
+    </script>
+</body>
+</html>
+

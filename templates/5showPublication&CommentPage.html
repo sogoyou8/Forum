@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Affichage de publication et de commentaire</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+
+<body>
+    <div class="hero">
+    <header>
+        <a href="/templates/1landingPage.html" class="logo-link">
+          <div class="logo">8Forum</div>
+        </a>
+        <nav>
+            <ul>
+                <li><a href="/about">A Propos</a></li>
+                <li><a href="/login">Login</a></li>
+             </ul>
+            
+            <img src="/pics/fuckThe7Teen.jpg" alt="userPic" class="user-icon" onclick="toggleMenu()">
+
+
+            <div class="sub-menu-wrap" id="subMenu">
+                <div class="sub-menu">
+                    <div class="user-info">
+                        <img src="/pics/fuckThe7Teen.jpg" alt="userPic">
+                        <h3>Toro</h3>
+                    </div>
+
+                    <hr>
+                    <a href="#" class="sub-menu-link">
+                        <img src="/pics/images/setting.png" alt="">
+                        <p>Setting&Privacy</p>
+                        <span>></span>
+                    </a>
+
+                    <a href="#" class="sub-menu-link">
+                        <img src="/pics/images/profile.png" alt="">
+                        <p>Edit Profile</p>
+                        <span>></span>
+                    </a>
+
+                    <a href="#" class="sub-menu-link">
+                        <img src="/pics/images/help.png" alt="">
+                        <p>Help&Support</p>
+                        <span>></span>
+                    </a>
+
+                    <a href="#" class="sub-menu-link">
+                        <img src="/pics/images/logout.png">
+                        <p>Loggout</p>
+                        <span>></span>
+                    </a>
+
+                </div>
+
+            </div>
+        </nav>
+    </header>
+
+    <h1>Publications et Commentaires</h1>
+    <h1>a changer plus tard avec les données</h1>
+
+    <div class="container">
+        {{#each Posts}}
+        <div class="post">
+            <h3>Post</h3>
+            <p>By: {{.Username}} </p>
+            <p>{{.Text}}</p>
+        </div>
+        {{/each}}
+
+        <!-- Pagination -->
+        <div class="pagination">
+            {{#if HasPreviousPage}}
+            <a href="{{PrevPageURL}}">Previous</a>
+            {{/if}}
+            {{#if HasNextPage}}
+            <a href="{{NextPageURL}}">Next</a>
+            {{/if}}
+        </div>
+
+        <div class="pagination">
+            <button id="prev-page">Previous</button>
+            <span id="page-num">Page 1</span>
+            <button id="next-page">Next</button>
+        </div>
+    </div>
+
+    <script>
+        let subMenu = document.getElementById("subMenu");
+  
+        function toggleMenu(){
+            subMenu.classList.toggle("open-menu");
+        }
+    </script>
+</body>
+</html>

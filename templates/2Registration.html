@@ -1,0 +1,128 @@
+<html>
+  <head>
+    <title>Page d'Inscription</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="icon" type="image/png" href="images/instagram.ico" />
+    <link
+      rel="stylesheet"
+      href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&lang=en"
+    />
+    <link
+      rel="stylesheet"
+      href="http://maxcdnd.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
+    />
+  </head>
+
+  <body>
+    <header>
+      <a href="/" class="logo-link">
+        <div class="logo">8Forum</div>
+      </a>
+      <nav>
+        <ul>
+          <li><a href="/about">A Propos</a></li>
+          <li><a href="/login">Login</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <section class="video-section">
+      <video autoplay muted loop src="/pics/messi.mov"></video>
+      <div class="main">
+        <div class="main-card-login">
+          <div class="registration-card">
+            <div class="login-card-header-image">
+              <!--<img src="/pics/forumLogo.jpg" height="70" width="180"> -->
+              <h1>Inscription</h1>
+            </div>
+            <form action="" method="POST">
+              <div class="login-card-form">
+                <input
+                  type="text"
+                  placeholder="Nom d'utilisateur "
+                  name="username"
+                />
+                <input type="text" placeholder="E-mail" name="email" />
+                <input
+                  type="password"
+                  placeholder="Mot de passe"
+                  name="password"
+                />
+                <input
+                  type="password"
+                  placeholder="Vérification du mot de passe"
+                />
+              </div>
+              <button
+                class="login-form-button"
+                id="registerButton"
+                type="submit"
+              >
+                Inscription
+              </button>
+            </form>
+          </div>
+
+          <div class="login-card-footer">
+            Déjà un compte ?
+            <span>
+              <a href="/login">Connexion</a>
+            </span>
+          </div>
+
+          <div class="download-app">Téléchargez l'application.</div>
+
+          <div class="download-app-buttons">
+            <img
+              src="https://i.ibb.co/0MVzVqf/download-appstore.png"
+              height="40"
+              width="130"
+            />
+            <img
+              src="https://i.ibb.co/hdsFFGB/download-playstore.png"
+              height="40"
+              width="130"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="legal__mention_links" bis_skin_checked="1">
+        <a
+          href="https://www.7speaking.com/fr/politique-de-confidentialite/"
+          target="_blank"
+          rel="noopener noreferrer"
+          bis_skin_checked="1"
+          >Politique de confidentialité
+        </a>
+        -<a class="cky-banner-element">Gestion des cookies</a> -<a
+          href="https://www.7speaking.com/fr/conditions-generales-dutilisation/"
+          target="_blank"
+          rel="noopener noreferrer"
+          bis_skin_checked="1"
+          >Conditions Générales d’Utilisation</a
+        >
+        -<a
+          href="https://www.7speaking.com/fr/a-propos/mentions-legales/"
+          target="_blank"
+          rel="noopener noreferrer"
+          bis_skin_checked="1"
+          >Mentions légales
+        </a>
+      </div>
+      &copy; 2024 Your Made by @Toro. All rights reserved.
+    </footer>
+
+    <script>
+      document
+        .getElementById("registerButton")
+        .addEventListener("click", function () {
+          // Action à effectuer lors du clic sur le bouton
+          window.location.href = "/login";
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ma page de profil</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+
+<body>
+    <div class="hero">
+    <header>
+        <a href="/templates/1landingPage.html" class="logo-link">
+          <div class="logo">8Forum</div>
+        </a>
+        
+        <nav>
+            <ul>
+                <li><a href="/about">A Propos</a></li>
+                <li><a href="/login">Login</a></li>
+             </ul>
+        
+            <img src="/pics/fuckThe7Teen.jpg" alt="userPic" class="user-icon" onclick="toggleMenu()">
+
+
+            <div class="sub-menu-wrap" id="subMenu">
+                <div class="sub-menu">
+                    <div class="user-info">
+                        <img src="/pics/fuckThe7Teen.jpg" alt="userPic">
+                        <h3>Toro</h3>
+                    </div>
+
+                    <hr>
+                    <a href="#" class="sub-menu-link">
+                        <img src="/pics/images/setting.png" alt="">
+                        <p>Setting&Privacy</p>
+                        <span>></span>
+                    </a>
+
+                    <a href="#" class="sub-menu-link">
+                        <img src="/pics/images/profile.png" alt="">
+                        <p>Edit Profile</p>
+                        <span>></span>
+                    </a>
+
+                    <a href="#" class="sub-menu-link">
+                        <img src="/pics/images/help.png" alt="">
+                        <p>Help&Support</p>
+                        <span>></span>
+                    </a>
+
+                    <a href="#" class="sub-menu-link">
+                        <img src="/pics/images/logout.png">
+                        <p>Loggout</p>
+                        <span>></span>
+                    </a>
+
+                </div>
+
+            </div>
+        </nav>
+    </header>
+
+    <h1>Montre la Catégorie en question</h1>
+    <h1>a changer plus tard avec les données</h1>
+
+    <div class="container">
+        {{#each Posts}}
+        <div class="post">
+            <h2>{{Title}}</h2>
+            <p>By: {{UserName}} | Date: {{Date}}</p>
+            <p>{{Content}}</p>
+            {{#if ImageURL}}
+            <img src="{{ImageURL}}" alt="{{Title}}">
+            {{/if}}
+        </div>
+        {{/each}}
+    </div>
+
+    <script>
+        let subMenu = document.getElementById("subMenu");
+  
+        function toggleMenu(){
+            subMenu.classList.toggle("open-menu");
+        }
+    </script>
+</body>
+</html>
+
+
+<!--checkpoint-->

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Activity</title>
+    <style>
+        /* Styles for better presentation */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .activity {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .activity-item {
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+        }
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+        .pagination {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .filter {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .filter select {
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Account Activity</h1>
+    
+    <div class="filter">
+        <label for="activity-type">Filter by Activity Type:</label>
+        <select id="activity-type">
+            <option value="all">All</option>
+            <option value="post">Created a Post</option>
+            <option value="like">Liked a Post</option>
+            <option value="comment">Commented on a Post</option>
+        </select>
+    </div>
+    
+    <div class="activity">
+        <!-- Example activity items will be populated dynamically from backend -->
+    </div>
+
+    <div class="pagination">
+        <button id="prev-page">Previous</button>
+        <span id="page-num">Page 1</span>
+        <button id="next-page">Next</button>
+    </div>
+
+    <script>
+        // Dummy data representing user activity
+        const activityData = [
+            { date: "May 10, 2024", type: "post", title: "Example Post Title" },
+            { date: "May 9, 2024", type: "like", title: "Another Post Title" },
+            { date: "May 8, 2024", type: "comment", title: "Yet Another Post Title" },
+            // Add more activity items dynamically from backend
+        ];
+
+        const activityContainer = document.querySelector('.activity');
+        const activityTypeFilter = document.getElementById('activity-type');
+        const prevPageBtn = document.getElementById('prev-page');
+        const nextPageBtn = document.getElementById('next-page');
+        const pageNumDisplay = document.getElementById('page-num');
+        const itemsPerPage = 5;
+        let currentPage = 1;
+
+        function renderActivityPage(page) {
+            activityContainer.innerHTML = '';
+            const startIndex = (page - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const filteredData = activityData.filter(item => activityTypeFilter.value === 'all' || item.type === activityTypeFilter.value);
+            const pageData = filteredData.slice(startIndex, endIndex);
+            pageData.forEach(item => {
+                const activityItem = document.createElement('div');
+                activityItem.classList.add('activity-item');
+                activityItem.innerHTML = `
+                    <p><strong>Date:</strong> ${item.date}</p>
+                    <p><strong>Action:</strong> ${getActionText(item.type)}</p>
+                    <p><strong>Post Title:</strong> ${item.title}</p>
+                `;
+                activityContainer.appendChild(activityItem);
+            });
+            pageNumDisplay.textContent = `Page ${currentPage}`;
+        }
+
+        function getActionText(type) {
+            switch (type) {
+                case 'post':
+                    return 'Created a Post';
+                case 'like':
+                    return 'Liked a Post';
+                case 'comment':
+                    return 'Commented on a Post';
+                default:
+                    return '';
+            }
+        }
+
+        function updatePaginationButtons() {
+            prevPageBtn.disabled = currentPage === 1;
+            nextPageBtn.disabled = currentPage === Math.ceil(activityData.length / itemsPerPage);
+        }
+
+        function goToPrevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                renderActivityPage(currentPage);
+                updatePaginationButtons();
+            }
+        }
+
+        function goToNextPage() {
+            if (currentPage < Math.ceil(activityData.length / itemsPerPage)) {
+                currentPage++;
+                renderActivityPage(currentPage);
+                updatePaginationButtons();
+            }
+        }
+
+        // Event listeners for pagination buttons
+        prevPageBtn.addEventListener('click', goToPrevPage);
+        nextPageBtn.addEventListener('click', goToNextPage);
+        // Event listener for activity type filter
+        activityTypeFilter.addEventListener('change', () => {
+            currentPage = 1;
+            renderActivityPage(currentPage);
+            updatePaginationButtons();
+        });
+
+        // Initial render
+        renderActivityPage(currentPage);
+        updatePaginationButtons();
+    </script>
+</body>
+</html>
+
+
+
+
+
+
