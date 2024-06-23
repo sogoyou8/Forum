@@ -5,6 +5,19 @@ import (
 	"strconv"
 )
 
+// ANCHOR - STRUCTURE POSTS
+type EntryPost struct {
+	ID       []int
+	Texts    []string
+	Text     string
+	Users    []string
+	User     []string
+	Filters  []string
+	Filter   []string
+	IsLogged bool
+	IsLiked  bool
+}
+
 // ANCHOR - NewDB
 // crée les structure des postes,des commentaires,et des utilisateurs dans la BDD
 func NewDB(db *sql.DB) *Post {
