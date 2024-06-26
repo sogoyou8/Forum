@@ -16,10 +16,18 @@
         </a>
         <nav>
             <ul>
-                <li><a href="/about">A Propos</a></li>
+              <li><a href="/publications">Publications</a></li>
+              <li><a href="/categories">Catégories</a></li>
+              <li><a href="/about">A Propos</a></li>
+              {{if not .IsLogged}}
                 <li><a href="/login">Login</a></li>
-             </ul>
-            
+              {{else}}
+              <li><a href="/create-category">Nouvelle catégorie</a></li>
+              <li><a href="/create-post">Nouveau post</a></li>
+              <li><a href="/profil-self">Profile</a></li>
+              {{end}}
+            </ul>
+                
             <img src="/pics/fuckThe7Teen.jpg" alt="userPic" class="user-icon" onclick="toggleMenu()">
 
 
@@ -62,32 +70,20 @@
     </header>
 
     <h1>Publications et Commentaires</h1>
-    <h1>a changer plus tard avec les données</h1>
 
     <div class="container">
-        {{#each Posts}}
-        <div class="post">
-            <h3>Post</h3>
-            <p>By: {{.Username}} </p>
-            <p>{{.Text}}</p>
-        </div>
-        {{/each}}
+        
+            {{range $i, $a := .Texts}}
+                    <div class="post">
+                        <h3>{{index $.Filters $i}}</h3>
+                        <p>By: {{index $.Users $i}} </p>
+                        <p>{{ $a }}</p>
+                        <a href="/comment?postID={{index $.ID $i}}">commentaires</a>
+                    </div>
+            {{end}}
+        
+        
 
-        <!-- Pagination -->
-        <div class="pagination">
-            {{#if HasPreviousPage}}
-            <a href="{{PrevPageURL}}">Previous</a>
-            {{/if}}
-            {{#if HasNextPage}}
-            <a href="{{NextPageURL}}">Next</a>
-            {{/if}}
-        </div>
-
-        <div class="pagination">
-            <button id="prev-page">Previous</button>
-            <span id="page-num">Page 1</span>
-            <button id="next-page">Next</button>
-        </div>
     </div>
 
     <script>
