@@ -14,6 +14,9 @@ type Post struct {
 func (post *Post) AddPost(id int, text string, user string, filtre string) {
 	stmt, _ := post.DB.Prepare(`INSERT INTO "posts"(ID, Text, User, Filter) values(?, ?, ?,?)`)
 	_, err := stmt.Exec(id, text, user, filtre)
+	if err != nil {
+		panic(err.Error())
+	}
 	fmt.Println(err)
 }
 
@@ -26,18 +29,21 @@ func InitialisationPost(E *EntryPost, ID int) {
 	E.Users = make([]string, ID+1)
 	E.Filters = make([]string, ID+1)
 
-	E.Filter = make([]string, 1)
 	E.User = make([]string, 1)
 }
 
 // ANCHOR - MajPost
 
 // Passe par tous les postes dans la BDD et les stock dans la struct
-func MajPost(E *EntryPost, update *Post, ID int, User string, Filtre string) {
+func MajPost(E *EntryPost, update *Post, ID int) {
+	var User string
+	var Filtre string
+
 	for i := 1; i <= ID; i++ {
 		err := update.DB.QueryRow("SELECT Text,User,Filter from posts WHERE ID = ?", i).Scan(&E.Text, &User, &Filtre)
 		E.Texts[i-1] = E.Text
 		E.Users[i-1] = User
+		fmt.Println("USER : ", User)
 		E.ID[i-1] = i
 		E.Filters[i-1] = Filtre
 		if err != nil {
