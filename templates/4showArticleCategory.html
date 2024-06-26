@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ma page de profil</title>
+    <title>Affichage de publication et de commentaire</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 
@@ -14,13 +14,20 @@
         <a href="/templates/1landingPage.html" class="logo-link">
           <div class="logo">8Forum</div>
         </a>
-        
         <nav>
             <ul>
-                <li><a href="/about">A Propos</a></li>
+              <li><a href="/publications">Publications</a></li>
+              <li><a href="/categories">Catégories</a></li>
+              <li><a href="/about">A Propos</a></li>
+              {{if not .IsLogged}}
                 <li><a href="/login">Login</a></li>
-             </ul>
-        
+              {{else}}
+              <li><a href="/create-category">Nouvelle catégorie</a></li>
+              <li><a href="/create-post">Nouveau post</a></li>
+              <li><a href="/profil-self">Profile</a></li>
+              {{end}}
+            </ul>
+                
             <img src="/pics/fuckThe7Teen.jpg" alt="userPic" class="user-icon" onclick="toggleMenu()">
 
 
@@ -62,20 +69,22 @@
         </nav>
     </header>
 
-    <h1>Montre la Catégorie en question</h1>
-    <h1>a changer plus tard avec les données</h1>
+    <h1>Publications et Commentaires</h1>
 
     <div class="container">
-        {{#each Posts}}
-        <div class="post">
-            <h2>{{Title}}</h2>
-            <p>By: {{UserName}} | Date: {{Date}}</p>
-            <p>{{Content}}</p>
-            {{#if ImageURL}}
-            <img src="{{ImageURL}}" alt="{{Title}}">
-            {{/if}}
-        </div>
-        {{/each}}
+            {{range $i, $a := .Filters}}
+            
+                {{ if eq  $a $.Filter}}
+                    <div class="post">
+                        <h3>{{$a}}</h3>
+                        <p>By: {{index $.Users $i}} </p>
+                        <p>{{ index $.Texts $i }}</p>
+                    </div>
+                {{end}}
+            {{end}}
+        
+        
+
     </div>
 
     <script>
@@ -87,6 +96,3 @@
     </script>
 </body>
 </html>
-
-
-<!--checkpoint-->
