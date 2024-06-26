@@ -16,9 +16,14 @@
         </a>
         <nav>
             <ul>
-                <li><a href="/about">A Propos</a></li>
-                <li><a href="/login">Login</a></li>
+              <li><a href="/publications">Publications</a></li>
+              <li><a href="/categories">Catégories</a></li>
+              <li><a href="/about">A Propos</a></li>
+              <li><a href="/create-category">Nouvelle catégorie</a></li>
+              <li><a href="/create-post">Nouveau post</a></li>
+              <li><a href="/profil-self">Profile</a></li>
             </ul>
+    
             
             <img src="/pics/fuckThe7Teen.jpg" alt="userPic" class="user-icon" onclick="toggleMenu()">
 
@@ -62,22 +67,22 @@
     </header>
 
     <h1>Catégorie</h1>
-    <h1>a changer plus tard avec les données</h1>
-
 
     <div class="container">
-        <div class="category">
-            <h1>Video Games</h1>
-            <p>Description: Discuss everything related to video games.</p>
-            <p>Created by: User123 on 2024-05-11</p>
-            <a href="">View Category(à créér)</a>
-        </div>
-        <div class="category">
-            <h1>Hiking</h1>
-            <p>Description: Share your hiking experiences and tips.</p>
-            <p>Created by: User456 on 2024-05-10</p>
-            <a href="">View Category(à créér)</a>
-        </div>
+        {{range .}}
+            {{if .}}
+                <div class="category">
+                    <h1>{{.}}</h1>
+                    <p>Description: Discuss everything related to the {{.}}.</p>
+                    <p>Created by: User123 on 2024-05-11</p>
+                    {{if .}}
+                    <a href="../category?category={{.}}">View Category</a>
+                    {{else}}
+                    <a href="../publications">see all</a>
+                    {{end}}
+                </div>
+            {{end}}
+        {{end}}
         <!-- Autres catégories ici -->
     </div>
     </div>
