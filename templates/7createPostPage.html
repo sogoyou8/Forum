@@ -16,10 +16,18 @@
         </a>
         <nav>
             <ul>
-                <li><a href="/about">A Propos</a></li>
+              <li><a href="/publications">Publications</a></li>
+              <li><a href="/categories">Catégories</a></li>
+              <li><a href="/about">A Propos</a></li>
+              {{if not .IsLogged}}
                 <li><a href="/login">Login</a></li>
-             </ul>
-            
+              {{else}}
+              <li><a href="/create-category">Nouvelle catégorie</a></li>
+              <li><a href="/create-post">Nouveau post</a></li>
+              <li><a href="/profil-self">Profile</a></li>
+              {{end}}
+            </ul>
+                
             <img src="/pics/fuckThe7Teen.jpg" alt="userPic" class="user-icon" onclick="toggleMenu()">
 
 
@@ -61,8 +69,7 @@
         </nav>
     </header>
 
-    <h1>Creation de Catégorie</h1>
-    <h1>a changer plus tard avec les données</h1>
+    <h1>Creation de Post</h1>
 
     <div class="container">
         <form id="create-post-form" action="/create-post" method="post" onsubmit="return submitForm()">
@@ -73,9 +80,10 @@
             <label for="post-category">Category:</label>
             <select id="post-category" name="post-category" required>
                 <option value="">Select a category</option>
-                <option value="Bundesliga">Bundesliga</option>
-                <option value="LDC">Champions league</option>
+                {{range $i, $c := .Categories}}
+                <option value="{{$c}}">{{$c}}</option>
                 <!-- Options de catégories seront ajoutées dynamiquement ici -->
+                {{end}}
             </select>
             <span id="post-category-error" class="error-message"></span>
             
