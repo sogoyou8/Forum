@@ -13,7 +13,7 @@ type EntryPost struct {
 	Users    []string
 	User     []string
 	Filters  []string
-	Filter   []string
+	Filter   string
 	IsLogged bool
 	IsLiked  bool
 }
@@ -56,6 +56,14 @@ func NewDB(db *sql.DB) *Post {
 			"postid"	TEXT,
 			"username"	TEXT,
 			"like"	TEXT
+		);
+	`)
+	stmt.Exec()
+	stmt, _ = db.Prepare(`
+		CREATE TABLE IF NOT EXISTS "categories" (
+			"ID"	INT,
+			"Category"	TEXT,
+			PRIMARY KEY("ID")
 		);
 	`)
 	stmt.Exec()
@@ -116,7 +124,7 @@ func OuvertureBDD(E *EntryPost, ID int, User string, filtre string) *Post {
 	// Synchronisation struct/BDD (import from BDD)
 	update.DB.QueryRow("SELECT MAX(id) from posts").Scan(&ID)
 	InitialisationPost(E, ID)
-	MajPost(E, update, ID, User, filtre)
+	MajPost(E, update, ID)
 	return &Post{
 		DB: update.DB,
 	}
