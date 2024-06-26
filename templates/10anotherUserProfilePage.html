@@ -15,10 +15,18 @@
         </a>
         <nav>
           <ul>
+            <li><a href="/publications">Publications</a></li>
+            <li><a href="/categories">Catégories</a></li>
             <li><a href="/about">A Propos</a></li>
-            <li><a href="/login">Login</a></li>
+            {{if not .IsLogged}}
+              <li><a href="/login">Login</a></li>
+            {{else}}
+            <li><a href="/create-category">Nouvelle catégorie</a></li>
+            <li><a href="/create-post">Nouveau post</a></li>
+            <li><a href="/profil-self">Profile</a></li>
+            {{end}}
           </ul>
-
+  
           <img
             src="/pics/fuckThe7Teen.jpg"
             alt="userPic"
