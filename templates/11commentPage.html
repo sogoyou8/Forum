@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commentaire</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+
+<body>
+    <div class="hero">
+    <header>
+        <a href="/templates/1landingPage.html" class="logo-link">
+          <div class="logo">8Forum</div>
+        </a>
+        <nav>
+            <ul>
+              <li><a href="/publications">Publications</a></li>
+              <li><a href="/categories">Catégories</a></li>
+              <li><a href="/about">A Propos</a></li>
+              {{if not .IsLogged}}
+                <li><a href="/login">Login</a></li>
+              {{else}}
+              <li><a href="/create-category">Nouvelle catégorie</a></li>
+              <li><a href="/create-post">Nouveau post</a></li>
+              <li><a href="/profil-self">Profile</a></li>
+              {{end}}
+            </ul>
+                
+            <img src="/pics/fuckThe7Teen.jpg" alt="userPic" class="user-icon" onclick="toggleMenu()">
+
+
+            <div class="sub-menu-wrap" id="subMenu">
+                <div class="sub-menu">
+                    <div class="user-info">
+                        <img src="/pics/fuckThe7Teen.jpg" alt="userPic">
+                        <h3>Toro</h3>
+                    </div>
+
+                    <hr>
+                    <a href="#" class="sub-menu-link">
+                        <img src="/pics/images/setting.png" alt="">
+                        <p>Setting&Privacy</p>
+                        <span>></span>
+                    </a>
+
+                    <a href="#" class="sub-menu-link">
+                        <img src="/pics/images/profile.png" alt="">
+                        <p>Edit Profile</p>
+                        <span>></span>
+                    </a>
+
+                    <a href="#" class="sub-menu-link">
+                        <img src="/pics/images/help.png" alt="">
+                        <p>Help&Support</p>
+                        <span>></span>
+                    </a>
+
+                    <a href="#" class="sub-menu-link">
+                        <img src="/pics/images/logout.png">
+                        <p>Loggout</p>
+                        <span>></span>
+                    </a>
+
+                </div>
+
+            </div>
+        </nav>
+    </header>
+    
+    <div class="container">
+        
+                    <div class="post-comment">
+                        <p>By: {{.PostUser}} </p>
+                        <p>{{ .PostText }}</p>
+                        {{if .IsLogged}}
+                            <form role=form method="POST" action="" autocomplete="off">
+                            <button type="submit" value="{{.PostIsLiked}}" id="like" name="like" onclick="change">
+                            </form>    
+                            {{if .PostIsLiked}}
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Football_Heart_Soccer_Fu%C3%9Fball_Fussball_Herz_-_Version_7.png" alt="heart full" width="64" height="64">
+                                {{else}}
+                                <img src="https://static.thenounproject.com/png/4590951-200.png" alt="heart empty" width="64" height="64">
+                                {{end}}
+                            </button>
+                            <p>{{.PostLikes}} likes</p>
+                        {{end}}
+
+                    </div>
+
+                    {{range $i, $a := .Texts}}
+                        {{if $a}}
+                            {{$commentId := index $.IDs $i}}
+
+                            {{$postId := index $.ID 0}}
+                            {{if eq $commentId $postId}}
+                                <div class="post-comment">
+                                    <p>By: {{index $.User $i}} </p>
+                                    <p>{{ $a }}</p>
+                                </div>
+                            {{end}}
+                        {{end}}
+                    {{end}}
+        
+        
+
+        <!-- Nouveau commentaire -->
+        {{if .IsLogged}}
+        <div class="form-container">
+            <form role=form method="POST" action="" autocomplete="off">
+              <div class="form-input">
+                <input type="text" size="70" placeholder="Ecrivez votre commentaire" name="commentaire"></input>
+                <button type="submit" action="http://localhost:8080/" method="post">Submit</button>
+              </div>
+            </form>
+          </div>
+          {{end}}
+    
+    </div>
+
+    <script>
+        let subMenu = document.getElementById("subMenu");
+  
+        function toggleMenu(){
+            subMenu.classList.toggle("open-menu");
+        }
+
+  function change()
+{
+    var elem = document.getElementById("like");
+    if (elem.value=="false") elem.value = "true";
+    else elem.value = "false";
+}
+    </script>
+</body>
+  
+</html>
