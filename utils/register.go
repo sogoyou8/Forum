@@ -12,6 +12,7 @@ type EntryUser struct {
 	IDs        []int
 	IsLogged   bool
 	IsSignedIn bool
+	Categories []string
 }
 
 //ANCHOR - InitialisationUsers
@@ -35,13 +36,11 @@ func (post *Post) AddUser(username, email, password string, ID int) {
 // Passe par tous les users dans la BDD et les stocke dans la struct
 func MajUsers(U *EntryUser, update *Post, ID int, email, password, username string) {
 	for i := 1; i <= ID; i++ {
-		err := update.DB.QueryRow("SELECT email,username,password from users WHERE ID = ?", i).Scan(&email, &username, &password)
+		update.DB.QueryRow("SELECT email,username,password from users WHERE ID = ?", i).Scan(&email, &username, &password)
 		U.Emails[i-1] = email
 		U.Users[i-1] = username
 		U.Passwords[i-1] = password
 		U.IDs[i-1] = i
-		if err != nil {
-			panic(err)
-		}
+
 	}
 }
